@@ -147,4 +147,18 @@ router.get("/", async (req, res) => {
   }
 });
 
+//select sub category 
+router.get("/cat/:category/", async (req, res) => {
+  console.log(req.params);
+
+  try {
+    const catfilter = await Product.find({ categories : req.params.category })
+    res.status(200).json(catfilter);
+  } 
+  catch (error) {
+    res.status(500).json(error);
+  }
+
+});
+
 module.exports = router;
