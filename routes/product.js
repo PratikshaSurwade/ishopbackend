@@ -1,4 +1,6 @@
 const Product = require("../models/Product");
+const Cart = require("../models/Cart");
+
 const cloudinary = require('cloudinary').v2
 const {
   verifyToken,
@@ -34,6 +36,7 @@ router.post("/", verifyTokenAndAdmin, (req, res) => {
   const file = req.files.photo;
   cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
     console.log(result)
+
     const newProduct = new Product({
       name: req.body.name,
       desc: req.body.desc,
@@ -48,6 +51,7 @@ router.post("/", verifyTokenAndAdmin, (req, res) => {
       discountedPrice: req.body.discountedPrice,
       rating: req.body.rating,
     });
+    
     const savedProduct = newProduct.save()
       .then(savedProduct => {
         console.log(savedProduct)
@@ -149,7 +153,6 @@ router.get("/", async (req, res) => {
 
 //select sub category 
 router.get("/cat/:category/", async (req, res) => {
-  console.log(req.params);
 
   try {
     const catfilter = await Product.find({ categories : req.params.category })

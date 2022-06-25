@@ -9,13 +9,15 @@ const router = require("express").Router();
 
 //CREATE
 
-router.post("/", verifyToken, async (req, res) => {
+router.post("/", async (req, res) => {
   const newCart = new Cart(req.body);
-
+  console.log(newCart)
   try {
     const savedCart = await newCart.save();
+    console.log(savedCart)
     res.status(200).json(savedCart);
   } catch (err) {
+    console.log(err)
     res.status(500).json(err);
   }
 });

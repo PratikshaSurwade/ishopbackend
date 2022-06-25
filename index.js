@@ -17,6 +17,7 @@ dotenv.config();
 app.use(fileUpload({
   useTempFiles:true
 }))
+
 app.use(cors());
 
 app.use(express.json());
@@ -50,7 +51,7 @@ app.use("/api/products", productRoute);
 app.use("/api/carts", cartRoute);
 //Order summary
 app.use("/api/orders", orderRoute);
-//
+//Payment method
 app.use("/api/payment", paymentRoutes);
 
 
