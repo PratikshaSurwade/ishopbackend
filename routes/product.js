@@ -35,7 +35,7 @@ router.post("/", verifyTokenAndAdmin, (req, res) => {
   // const newProduct = new Product(req.body);
   const file = req.files.photo;
   cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
-    console.log(result)
+    console.log(result);
 
     const newProduct = new Product({
       name: req.body.name,

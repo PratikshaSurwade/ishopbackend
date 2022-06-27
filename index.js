@@ -14,6 +14,7 @@ const paymentRoutes = require("./routes/payment");
 const fileUpload = require('express-fileupload');
 
 dotenv.config();
+
 app.use(fileUpload({
   useTempFiles:true
 }))

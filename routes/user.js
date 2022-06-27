@@ -5,7 +5,16 @@ const {
   verifyTokenAndAdmin,
 } = require("./verifyToken");
 
+const cloudinary = require('cloudinary').v2
+
 const router = require("express").Router();
+
+//cloudinary
+cloudinary.config({
+  cloud_name: 'dn9hxyxud',
+  api_key: '288723588442291',
+  api_secret: 'yRPWxzL6jCHBJPNfxPaAIF6Z2k4'
+})
 
 //UPDATE
 router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {

@@ -5,6 +5,16 @@ const bcryptjs = require('bcrypt');
 const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
 
+const cloudinary = require('cloudinary').v2
+
+
+//cloudinary
+cloudinary.config({
+  cloud_name: 'dn9hxyxud',
+  api_key: '288723588442291',
+  api_secret: 'yRPWxzL6jCHBJPNfxPaAIF6Z2k4'
+})
+
 //Register
 
 // router.post("/register", async (req,res) => {
@@ -26,6 +36,7 @@ const jwt = require("jsonwebtoken");
 // })
 // /using crypto paste pass_sec from .env it can be anything u want say PASS_SEC=pratiksha
 
+
 router.post("/register", async (req, res) => {
   const newUser = new User({
     username: req.body.username,
@@ -34,6 +45,7 @@ router.post("/register", async (req, res) => {
       req.body.password,
       process.env.PASS_SEC
     ).toString(),
+    profilePic:req.body.profilePic,
   });
 
   try {
@@ -43,6 +55,50 @@ router.post("/register", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+
+// router.post("/register", async (req, res) => {
+//   console.log(req.body);
+//   console.log(req.body.file)
+//   console.log(req.files);
+//   console.log(req.File);
+
+//   const file = req.files.photo;
+//   console.log(file);
+
+//   cloudinary.uploader.upload(file.tempFilePath, (err, result) => {     
+//     console.log(result);
+
+//     const newUser = new User({
+//         username: req.body.username,
+//         email: req.body.email,
+//         password: CryptoJS.AES.encrypt(
+//           req.body.password,
+//           process.env.PASS_SEC
+//         ).toString(),
+//         profilePic: result.url,
+//     });
+    
+//     const savedUser = newUser.save()
+//       .then(savedUser => {
+//         console.log(savedUser)
+//         res.status(200).json(savedUser);
+//       })
+
+//       .catch(err => {
+//         console.log(err)
+//         res.status(500).json(err);
+//       })
+//   })
+
+
+  // try {
+  //   const savedUser = await newUser.save();
+  //   res.status(201).json(savedUser);
+  // } catch (err) {
+  //   res.status(500).json(err);
+  // }
+// });
 
 //Login
 
@@ -62,7 +118,8 @@ router.post("/register", async (req, res) => {
 //       res.status(500).json(err);
 //     }
 //   });
-//Login usinf g crypto 
+//Login using crypto 
+
 router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
